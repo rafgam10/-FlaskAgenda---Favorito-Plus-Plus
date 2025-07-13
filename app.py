@@ -33,9 +33,16 @@ def novo_contato():
     
     return render_template("contato_form.html")
 
-@app.route("/editar/<int:id>", methods=["GET", "PUT"])
+@app.route("/editar/<int:id>", methods=["POST"])
 def editar_contato(id):
-    pass
+    nome = request.form.get("nome")
+    telefone = request.form.get("telefone")
+    email = request.form.get("email")
+    favorito = 1 if request.form.get("favorito") == "1" else 0
+
+    Editar_contato(id, nome, telefone, email, favorito)
+    flash("Contato atualizado com sucesso!")
+    return redirect(url_for("index"))
 
 
 @app.route("/deletar/<int:id>", methods=["GET", "DELETE"])
