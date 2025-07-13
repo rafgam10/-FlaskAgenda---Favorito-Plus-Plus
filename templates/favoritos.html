@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+    
+    <h2 class="mb-4">Contatos Favoritos</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Favorito</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contato in contatos %}
+                <tr>
+                    <td>{{ contato.id }}</td>     {# id do contato #}
+                    <td>{{ contato.nome }}</td>   {# nome do contato #}
+                    <td>{{ contato.telefone }}</td> {# telefone #}
+                    <td>{{ contato.email }}</td>  {# email #}
+                    <td onclick="">
+                        {% if contato.favorito == 1 %}
+                            ⭐
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('editar_contato', id=contato.id) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ url_for('deletar_contato', id=contato.id) }}" class="btn btn-danger">Deletar</a>
+                    </td>
+                </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock conteudo %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block conteudo %}
+
+    <h2 class="mb-4">Novo Contato</h2>
+
+    <form method="post">
+        <div class="mb-3">
+            <label for="nomeCont" class="form-label">Nome do Contato</label>
+            <input type="text" name="nomeCont" class="form-control" id="nomeCont" required>
+        </div>
+        <div class="mb-3">
+            <label for="telefoneCont" class="form-label">Telefone do Contato</label>
+            <input type="text" name="telefoneCont" class="form-control" id="telefoneCont" required>
+        </div>
+        <div class="mb-3">
+            <label for="emailCont" class="form-label">Email do Contato</label>
+            <input type="email" name="emailCont" class="form-control" id="emailCont">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="checkCont" class="form-check-input" id="checkCont">
+            <label class="form-check-label" for="checkCont">Favorito</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar Contato</button>
+    </form>
+
+{% endblock conteudo %}
