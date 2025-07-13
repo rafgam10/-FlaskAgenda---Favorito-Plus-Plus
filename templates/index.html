@@ -7,17 +7,17 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Favorito</th>
+                <th>ID</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Favorito</th><th>Ações</th>
             </tr>
         </thead>
         <tbody>
             {% for contato in contatos %}
                 <tr>
-                    <td>{{ contato.id }}</td>     {# id do contato #}
-                    <td>{{ contato.nome }}</td>   {# nome do contato #}
-                    <td>{{ contato.telefone }}</td> {# telefone #}
-                    <td>{{ contato.email }}</td>  {# email #}
-                    <td onclick="">
+                    <td>{{ contato.id }}</td>
+                    <td>{{ contato.nome }}</td>
+                    <td>{{ contato.telefone }}</td>
+                    <td>{{ contato.email }}</td>
+                    <td>
                         {% if contato.favorito == 1 %}
                             ⭐
                         {% else %}
@@ -25,13 +25,59 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ url_for('editar_contato', id=contato.id) }}" class="btn btn-primary">Editar</a>
+                        <button class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalEditar"
+                                data-id="{{ contato.id }}"
+                                data-nome="{{ contato.nome }}"
+                                data-telefone="{{ contato.telefone }}"
+                                data-email="{{ contato.email }}"
+                                data-favorito="{{ contato.favorito }}">
+                            Editar
+                        </button>
                         <a href="{{ url_for('deletar_contato', id=contato.id) }}" class="btn btn-danger">Deletar</a>
                     </td>
                 </tr>
-                
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Modal de edição - apenas 1 vez fora do loop -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" id="formEditar">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarLabel">Editar Contato</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editId" name="id">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="editNome" name="nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Telefone</label>
+                            <input type="text" class="form-control" id="editTelefone" name="telefone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editEmail" name="email" required>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="editFavorito" name="favorito" value="1">
+                            <label class="form-check-label" for="editFavorito">Favorito</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 {% endblock conteudo %}
