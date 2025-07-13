@@ -41,8 +41,21 @@ def Add_contato(nome:str, telefone:str, email:str, favorito:int):
     conn.close()
     return
 
-def Editar_contato(id:int):
-    pass
+def Editar_contato(id:int, nome:str, telefone:str, email:str, favorito:int):
+    conn = conectar()
+    cursor = conn.cursor()
+    
+    cursor.execute(
+    """
+        UPDATE Contatos
+        SET nome = ?, telefone = ?, email = ?, favorito = ?
+        WHERE id = ?;
+    """, (nome, telefone, email, favorito, id)
+    )
+    
+    conn.commit()
+    conn.close()
+    return
 
 def Deletar_contato(id:int):
     conn = conectar()
